@@ -1,5 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
-export const BASE_URL = API_URL;
+export const BASE_URL = "https://fastapi-instaverse.onrender.com";
 
 export const STATUS_CODES = {
     // Success
