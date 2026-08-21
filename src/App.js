@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { BASE_URL } from './constant';
-
+import CreatePostModal from './components/CreatePostModal';
 import TopNav from './components/TopNav';
-import PostCard from './PostCard';
+import PostCard from './components/PostCard';
 import AuthModal from './components/AuthModal';
 
 function App() {
   const [blogs, setBlogs] = useState([]);
   const [authModal, setAuthModal] = useState(false);
   const [modalType, setModalType] = useState('');
+  const [createPostModal, setCreatePostModal] = useState(false);
   const fetchBlogs = () => {
 
     fetch(`${BASE_URL}/post/all`)
@@ -31,11 +32,17 @@ function App() {
       <TopNav
         setAuthModal={setAuthModal}
         setModalType={setModalType}
+        setCreatePostModal={setCreatePostModal}
       />
       <AuthModal
         opened={authModal}
         onClose={() => setAuthModal(false)}
         type={modalType}
+      />
+      <CreatePostModal
+        opened={createPostModal}
+        onClose={() => setCreatePostModal(false)}
+        onPostCreated={fetchBlogs}
       />
       <div className="blogs-container">
         {blogs && blogs.length > 0 ? (

@@ -5,10 +5,13 @@ import {
     Group,
     TextInput,
 } from '@mantine/core';
+import {
+    STATUS_MESSAGES
+} from '../constant';
 import { notifications } from '@mantine/notifications';
 import { IconTrash, IconSend } from '@tabler/icons-react';
-import { BASE_URL } from './constant';
-import './PostCard.css';
+import "../PostCard.css"
+import { BASE_URL } from '../constant';
 
 function PostCard({ post, onCommentAdded, onDelete }) {
     const token = localStorage.getItem('access_token');
@@ -59,14 +62,14 @@ function PostCard({ post, onCommentAdded, onDelete }) {
             if (response.status !== 200) {
                 notifications.show({
                     title: 'Error',
-                    message: response.statusText || "Something went wrong",
+                    message: STATUS_MESSAGES[response.status] || "Something went wrong",
                     color: 'red',
                 });
             }
             if (response.ok) {
                 notifications.show({
                     title: 'Success',
-                    message: "Comment added successful!",
+                    message: STATUS_MESSAGES[200],
                 });
             }
             if (!response.ok) {
@@ -106,10 +109,11 @@ function PostCard({ post, onCommentAdded, onDelete }) {
 
 
             );
+            console.log(response, "2345")
             if (response.status !== 200) {
                 notifications.show({
                     title: 'Error',
-                    message: response.statusText || "Something went wrong",
+                    message: STATUS_MESSAGES[response.status] || "Something went wrong",
                     color: 'red',
                 });
             }
@@ -120,7 +124,7 @@ function PostCard({ post, onCommentAdded, onDelete }) {
                 await onCommentAdded();
                 notifications.show({
                     title: 'Success',
-                    message: "Delete post successful!",
+                    message: STATUS_MESSAGES[200],
                 });
             }
             if (onDelete) {
@@ -173,11 +177,22 @@ function PostCard({ post, onCommentAdded, onDelete }) {
             <div className="post-image-container">
 
                 <img
-                    src={`${BASE_URL}/${post.image_url}`}
+                    src={
+                        post.image_url?.startsWith('http')
+                            ? post.image_url
+                            : `${BASE_URL}/${post.image_url}`
+                    }
                     alt={post.caption}
                     className="post-image"
+                    onError={(e) => {
+                        // If relative URL failed, try absolute URL
+                        if (!e.currentTarget.src.includes(post.image_url)) {
+                            e.currentTarget.src = post.image_url;
+                        } else {
+                            e.currentTarget.src = '/default-image.jpg';
+                        }
+                    }}
                 />
-
             </div>
 
 
