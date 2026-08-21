@@ -1,12 +1,10 @@
 import {
     Button,
-    Avatar,
-    Group,
 } from '@mantine/core';
 
 import "../TopNav.css";
-
-import { capitalizeFirstLetter } from '../utils/utils';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 function TopNav({
@@ -15,12 +13,12 @@ function TopNav({
     setCreatePostModal
 }) {
     const { login, logout } = useAuth();
+    const navigate = useNavigate();
+    // const username = localStorage.getItem('username');
 
-    const username = localStorage.getItem('username');
-
-    const displayUsername = username
-        ? capitalizeFirstLetter(username)
-        : 'User';
+    // const displayUsername = username
+    //     ? capitalizeFirstLetter(username)
+    //     : 'User';
 
     return (
         <nav className="top-nav">
@@ -30,13 +28,28 @@ function TopNav({
                 {/* ================= LOGO ================= */}
                 <div className="nav-logo">
 
-                    <div className="logo-icon">
+                    <div
+                        className="logo-icon"
+                        onClick={() => {
+                            navigate("/");
+                        }}
+                    >
                         I
                     </div>
 
                     <span className="app-name">
                         InstaVerse
                     </span>
+
+                    {/* Create Post next to logo */}
+                    {login && (
+                        <Button
+                            size="sm"
+                            onClick={() => setCreatePostModal(true)}
+                        >
+                            Create
+                        </Button>
+                    )}
 
                 </div>
 
@@ -76,34 +89,15 @@ function TopNav({
 
                     <div className="nav-actions">
 
-                        {/* Create Post */}
-                        <Button
-                            size="sm"
-                            onClick={() => setCreatePostModal(true)}
-                        >
-                            Create Post
-                        </Button>
-
-
                         {/* User */}
-                        <Group
-                            gap="xs"
-                            className="nav-user"
+                        <Button
+                            component={Link}
+                            to="/settings"
+                            variant="light"
+                            size="sm"
                         >
-
-                            <Avatar
-                                size="sm"
-                                radius="xl"
-                                color="blue"
-                            >
-                                {displayUsername.charAt(0)}
-                            </Avatar>
-
-                            <span className="nav-username">
-                                {displayUsername}
-                            </span>
-
-                        </Group>
+                            Settings
+                        </Button>
 
 
                         {/* Logout */}
