@@ -15,6 +15,7 @@ import { BASE_URL } from '../constant';
 
 function PostCard({ post, onCommentAdded, onDelete }) {
     const token = localStorage.getItem('access_token');
+    const username = localStorage.getItem('username');
     const [comment, setComment] = useState('');
     const [loading, setLoading] = useState(false);
     const [deleting, setDeleting] = useState(false);
@@ -53,7 +54,7 @@ function PostCard({ post, onCommentAdded, onDelete }) {
                         Authorization: `Bearer ${token}`,
                     },
                     body: JSON.stringify({
-                        username: post?.user?.username,
+                        username: username,
                         text: comment,
                         post_id: post.id,
                     }),

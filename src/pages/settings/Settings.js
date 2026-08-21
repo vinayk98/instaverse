@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Avatar } from '@mantine/core';
+import { Avatar, Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../constant';
 import { capitalizeFirstLetter } from '../../utils/utils';
+import { useAuth } from '../../context/AuthContext';
 import './Settings.css';
 
 function Settings() {
@@ -10,6 +11,7 @@ function Settings() {
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
+    const { logout } = useAuth();
 
     const username = localStorage.getItem('username');
     const email = localStorage.getItem('email');
@@ -80,11 +82,23 @@ function Settings() {
                         {posts.length} Posts
                     </p>
 
+                    {/* Logout */}
+                    <Button
+                        color="blue"
+                        variant="outline"
+                        size="sm"
+                        onClick={logout}
+                    >
+                        Logout
+                    </Button>
+
                 </div>
 
             </div>
 
-            {/* Posts */}
+
+            {/* ================= POSTS ================= */}
+
             <div className="user-posts-section">
 
                 <h2>

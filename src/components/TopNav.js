@@ -12,7 +12,7 @@ function TopNav({
     setModalType,
     setCreatePostModal
 }) {
-    const { login, logout } = useAuth();
+    const { login } = useAuth();
     const navigate = useNavigate();
     // const username = localStorage.getItem('username');
 
@@ -98,22 +98,8 @@ function TopNav({
                         >
                             Settings
                         </Button>
-
-
-                        {/* Logout */}
-                        <Button
-                            color="blue"
-                            variant="outline"
-                            size="sm"
-                            onClick={logout}
-                        >
-                            Logout
-                        </Button>
-
                     </div>
-
                 )}
-
             </div>
 
         </nav>

@@ -13,13 +13,19 @@
     border-bottom: 1px solid #ddd;
 }
 
+.profile-info {
+    text-align: left;
+}
+
 .profile-info h1 {
-    margin: 0 0 10px;
-    font-size: 28px;
+    padding: 0;
+    margin: 0;
+    height: 28px;
+    font-size: 20px;
 }
 
 .profile-info p {
-    margin: 6px 0;
+    margin: 0 0 6px 0;
     color: #666;
 }
 
